@@ -18,4 +18,7 @@ class TmdbApiServices(
     private val api: TmdbApi = createService()
 
     suspend fun getPopularMovies() = api.getPopularMovies()
+    suspend fun getPopularTvShow() = api.getPopularTvShow()
+    suspend fun getTopRatedMovie() = api.getTopRatedMovie()
+    suspend fun getTopRatedTvShow() = api.getTopRatedTvShow()
 }

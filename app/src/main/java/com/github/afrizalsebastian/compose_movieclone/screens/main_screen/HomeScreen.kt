@@ -34,19 +34,30 @@ fun HomeScreen(
     viewModel: HomeScreenViewModel = viewModel()
 ) {
     val trendingMovies by viewModel.trendingMovies.collectAsStateWithLifecycle()
+    val trendingTvShow by viewModel.trendingTvShow.collectAsStateWithLifecycle()
+    val topRatedMovie by viewModel.topRatedMovie.collectAsStateWithLifecycle()
+    val topRatedTvShow by viewModel.topRatedTvShow.collectAsStateWithLifecycle()
+    val heroImage by viewModel.heroImage.collectAsStateWithLifecycle()
 
     LazyColumn(
         modifier = modifier
             .padding(10.dp)
     ) {
         item {
-            ImageCardWithLoading(
-                path = buildPosterPath(Constants.heroTestURL2),
-                contentDescription = "Hero Poster",
+            heroImage?.let {
+                ImageCardWithLoading(
+                    path = buildPosterPath(it.posterPath),
+                    contentDescription = "Hero Poster",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(2f/3f)
+                        .clip(RoundedCornerShape(16.dp))
+                )
+            }
+
+            Spacer(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(2f/3f)
-                    .clip(RoundedCornerShape(16.dp))
+                    .height(24.dp)
             )
 
             Row(
@@ -77,6 +88,9 @@ fun HomeScreen(
             HorizontalMovieCard(
                 "Movie Trending",
                 trendingMovies,
+                onReloadFailed = {
+                    viewModel.fetchTrendingMovies()
+                },
                 modifier = Modifier
                     .padding(vertical = 12.dp)
             )
@@ -87,8 +101,11 @@ fun HomeScreen(
             )
 
             HorizontalMovieCard(
-                "Movie Trending",
-                trendingMovies,
+                "TV Show Trending",
+                trendingTvShow,
+                onReloadFailed = {
+                    viewModel.fetchTrendingTvShow()
+                },
                 modifier = Modifier
                     .padding(vertical = 12.dp)
             )
@@ -99,8 +116,11 @@ fun HomeScreen(
             )
 
             HorizontalMovieCard(
-                "Movie Trending",
-                trendingMovies,
+                "Movie Top Rated",
+                topRatedMovie,
+                onReloadFailed = {
+                    viewModel.fetchTopRateMovie()
+                },
                 modifier = Modifier
                     .padding(vertical = 12.dp)
             )
@@ -111,8 +131,11 @@ fun HomeScreen(
             )
 
             HorizontalMovieCard(
-                "Movie Trending",
-                trendingMovies,
+                "TV Show Trending",
+                topRatedTvShow,
+                onReloadFailed = {
+                    viewModel.fetchTopRateTvShow()
+                },
                 modifier = Modifier
                     .padding(vertical = 12.dp)
             )

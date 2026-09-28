@@ -7,4 +7,13 @@ import retrofit2.http.GET
 interface TmdbApi {
     @GET("trending/movie/day")
     suspend fun getPopularMovies(): MovieListApiResponse
+
+    @GET("trending/tv/day")
+    suspend fun getPopularTvShow(): MovieListApiResponse
+
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovie(): MovieListApiResponse
+
+    @GET("tv/top_rated")
+    suspend fun getTopRatedTvShow(): MovieListApiResponse
 }

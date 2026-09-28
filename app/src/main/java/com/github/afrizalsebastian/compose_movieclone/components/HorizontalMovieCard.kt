@@ -6,14 +6,20 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,11 +32,13 @@ import com.github.afrizalsebastian.compose_movieclone.constants.buildPosterPath
 import com.github.afrizalsebastian.compose_movieclone.models.ApiStatus
 import com.github.afrizalsebastian.compose_movieclone.ui.theme.ComposeMovieCloneTheme
 import com.github.afrizalsebastian.compose_movieclone.viewmodels.HomeScreenViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun HorizontalMovieCard(
     title: String,
     state: HomeScreenViewModel.ListMovieResponse,
+    onReloadFailed:  () -> Unit,
     modifier: Modifier = Modifier
 ){
     Box(
@@ -50,8 +58,15 @@ fun HorizontalMovieCard(
                 ApiStatus.FETCHING -> CircularProgressIndicator()
                 ApiStatus.FAILED -> Box(
                     modifier = Modifier.height(16.dp)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center,
                 ) {
-                    Text("Failed to fetch data")
+                    Column() {
+                        Text("Failed to fetch data")
+                        Button(onClick = onReloadFailed) {
+                            Icon(imageVector = Icons.Default.Refresh, contentDescription = "Reload")
+                        }
+                    }
                 }
                 ApiStatus.SUCCESS -> LazyRow(
                     horizontalArrangement = Arrangement.Start,
@@ -83,7 +98,8 @@ fun HorizontalMovieCardPreview() {
     ComposeMovieCloneTheme() {
         HorizontalMovieCard(
             title = "Movies Trending",
-            state = HomeScreenViewModel.ListMovieResponse()
+            state = HomeScreenViewModel.ListMovieResponse(),
+            onReloadFailed = {}
         )
     }
 }
