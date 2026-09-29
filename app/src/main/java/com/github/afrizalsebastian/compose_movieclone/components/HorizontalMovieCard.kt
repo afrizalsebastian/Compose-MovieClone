@@ -1,6 +1,7 @@
 package com.github.afrizalsebastian.compose_movieclone.components
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +40,7 @@ fun HorizontalMovieCard(
     title: String,
     state: HomeScreenViewModel.ListMovieResponse,
     onReloadFailed:  () -> Unit,
+    onClickPoster: (Movie?) -> Unit,
     modifier: Modifier = Modifier
 ){
     Box(
@@ -84,6 +86,9 @@ fun HorizontalMovieCard(
                             modifier = Modifier.height(125.dp)
                                 .aspectRatio(2f/3f)
                                 .clip(RoundedCornerShape(8.dp))
+                                .clickable{
+                                    onClickPoster(m)
+                                }
                         )
                     }
                 }
@@ -99,7 +104,8 @@ fun HorizontalMovieCardPreview() {
         HorizontalMovieCard(
             title = "Movies Trending",
             state = HomeScreenViewModel.ListMovieResponse(),
-            onReloadFailed = {}
+            onReloadFailed = {},
+            onClickPoster = {}
         )
     }
 }

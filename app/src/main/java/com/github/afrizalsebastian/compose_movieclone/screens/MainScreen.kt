@@ -25,12 +25,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.github.afrizalsebastian.compose_movieclone.models.Movie
 import com.github.afrizalsebastian.compose_movieclone.screens.main_screen.HomeScreen
 import com.github.afrizalsebastian.compose_movieclone.ui.theme.ComposeMovieCloneTheme
 
 @Composable
 fun MainScreen(
-    toMovieDetail: () -> Unit,
+    toMovieDetail: (Movie?) -> Unit,
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabItems = listOf(

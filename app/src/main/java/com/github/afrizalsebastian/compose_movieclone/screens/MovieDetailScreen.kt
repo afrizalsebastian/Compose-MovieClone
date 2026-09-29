@@ -7,15 +7,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.github.afrizalsebastian.compose_movieclone.models.Movie
 import com.github.afrizalsebastian.compose_movieclone.ui.theme.ComposeMovieCloneTheme
 
 @Composable
-fun MovieDetailScreen() {
+fun MovieDetailScreen(
+    movie: Movie,
+) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
         Text(
-            "Movie Detail Screen",
+            "Movie Detail Screen ${movie.title ?: movie.name ?: ""}",
             modifier = Modifier.padding(innerPadding)
         )
     }
@@ -25,6 +28,8 @@ fun MovieDetailScreen() {
 @Composable
 fun MovieDetailScreenPreview() {
     ComposeMovieCloneTheme() {
-        MovieDetailScreen()
+        MovieDetailScreen(
+            movie = Movie.exampleMovie[0]
+        )
     }
 }

@@ -1,15 +1,17 @@
 package com.github.afrizalsebastian.compose_movieclone.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import com.github.afrizalsebastian.compose_movieclone.constants.Constants
-import com.google.gson.annotations.SerializedName
 
+@Parcelize
 data class Movie(
     val id: Int?,
     val title: String?,
     val name: String?,
     val overview: String?,
     val posterPath: String?,
-){
+): Parcelable{
     companion object {
         val exampleMovie = listOf<Movie>(
             Movie(id = 1, title = "Beetle Juice", name = "Beetle Juice", overview = "Beetle Juice Movie", posterPath = Constants.heroTestURL),

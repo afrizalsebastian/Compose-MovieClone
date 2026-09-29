@@ -24,7 +24,7 @@ fun ImageCardWithLoading(
 
     Box(
         modifier = modifier,
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ){
         AsyncImage(
             model = path,

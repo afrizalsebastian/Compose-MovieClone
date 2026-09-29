@@ -23,13 +23,14 @@ import com.github.afrizalsebastian.compose_movieclone.components.HorizontalMovie
 import com.github.afrizalsebastian.compose_movieclone.components.ImageCardWithLoading
 import com.github.afrizalsebastian.compose_movieclone.constants.Constants
 import com.github.afrizalsebastian.compose_movieclone.constants.buildPosterPath
+import com.github.afrizalsebastian.compose_movieclone.models.Movie
 import com.github.afrizalsebastian.compose_movieclone.ui.theme.ComposeMovieCloneTheme
 import com.github.afrizalsebastian.compose_movieclone.viewmodels.HomeScreenViewModel
 
 
 @Composable
 fun HomeScreen(
-    toMovieDetail: () -> Unit,
+    toMovieDetail: (Movie?) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeScreenViewModel = viewModel()
 ) {
@@ -66,7 +67,9 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Button(
-                    onClick = toMovieDetail,
+                    onClick = {
+                        toMovieDetail(heroImage)
+                    },
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(Constants.playString)
@@ -91,6 +94,7 @@ fun HomeScreen(
                 onReloadFailed = {
                     viewModel.fetchTrendingMovies()
                 },
+                onClickPoster = toMovieDetail,
                 modifier = Modifier
                     .padding(vertical = 12.dp)
             )
@@ -106,6 +110,7 @@ fun HomeScreen(
                 onReloadFailed = {
                     viewModel.fetchTrendingTvShow()
                 },
+                onClickPoster = toMovieDetail,
                 modifier = Modifier
                     .padding(vertical = 12.dp)
             )
@@ -121,6 +126,7 @@ fun HomeScreen(
                 onReloadFailed = {
                     viewModel.fetchTopRateMovie()
                 },
+                onClickPoster = toMovieDetail,
                 modifier = Modifier
                     .padding(vertical = 12.dp)
             )
@@ -136,6 +142,7 @@ fun HomeScreen(
                 onReloadFailed = {
                     viewModel.fetchTopRateTvShow()
                 },
+                onClickPoster = toMovieDetail,
                 modifier = Modifier
                     .padding(vertical = 12.dp)
             )
