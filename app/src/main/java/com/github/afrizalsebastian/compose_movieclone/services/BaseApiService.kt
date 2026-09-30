@@ -13,7 +13,6 @@ abstract class BaseApiService(
     protected val baseUrl: String,
     protected val interceptor: ((Interceptor.Chain) -> Response)? = null,
     protected val jsonStrategy: Gson = GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create(),
     protected val client: OkHttpClient = NetworkService.httpClient
 ) {

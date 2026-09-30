@@ -7,4 +7,9 @@ object ApiConfigs{
         apiKey = BuildConfig.TMDB_API_KEY,
         baseUrl = BuildConfig.TMDB_BASE_URL,
     )
+
+    val yt = YoutubeConfigs(
+        baseUrl = BuildConfig.YT_API_BASE_URL,
+        apiKey = BuildConfig.YT_API_KEY,
+    )
 }

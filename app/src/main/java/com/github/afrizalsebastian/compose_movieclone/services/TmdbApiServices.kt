@@ -1,6 +1,8 @@
 package com.github.afrizalsebastian.compose_movieclone.services
 
 import com.github.afrizalsebastian.compose_movieclone.configs.ApiConfigs
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.GsonBuilder
 
 class TmdbApiServices(
     baseUrl: String = ApiConfigs.tmbd.baseUrl,
@@ -10,10 +12,13 @@ class TmdbApiServices(
     interceptor = { chain ->
         val request = chain.request().newBuilder()
             .header("Authorization", "Bearer $apiKey")
-            .header("Accept", "application/json")
+            .header("Content-Type", "application/json")
             .build()
         chain.proceed(request)
-    }
+    },
+    jsonStrategy = GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create()
 ){
     private val api: TmdbApi = createService()
 
