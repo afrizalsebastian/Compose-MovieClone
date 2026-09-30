@@ -19,7 +19,7 @@ fun YoutubePlayer(
     modifier: Modifier = Modifier,
 ){
     val baseUrl: String = BuildConfig.YT_BASE_URL
-    val fullPath = "$baseUrl/embed/$videoId"
+    val fullPath = "$baseUrl/embed/$videoId?fs=0"
 
     val headers = mapOf(
         "Referer" to baseUrl,
