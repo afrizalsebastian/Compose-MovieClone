@@ -25,14 +25,14 @@ import com.github.afrizalsebastian.compose_movieclone.constants.Constants
 import com.github.afrizalsebastian.compose_movieclone.constants.buildPosterPath
 import com.github.afrizalsebastian.compose_movieclone.models.Movie
 import com.github.afrizalsebastian.compose_movieclone.ui.theme.ComposeMovieCloneTheme
-import com.github.afrizalsebastian.compose_movieclone.viewmodels.HomeScreenViewModel
+import com.github.afrizalsebastian.compose_movieclone.viewmodels.HomeViewModel
 
 
 @Composable
 fun HomeScreen(
     toMovieDetail: (Movie?) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HomeScreenViewModel = viewModel()
+    viewModel: HomeViewModel = viewModel()
 ) {
     val trendingMovies by viewModel.trendingMovies.collectAsStateWithLifecycle()
     val trendingTvShow by viewModel.trendingTvShow.collectAsStateWithLifecycle()

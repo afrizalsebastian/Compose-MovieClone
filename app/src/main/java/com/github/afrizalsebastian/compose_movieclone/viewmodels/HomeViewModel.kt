@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeScreenViewModel: ViewModel() {
+class HomeViewModel: ViewModel() {
     data class ListMovieResponse(
         val status: ApiStatus = ApiStatus.NOT_STARTED,
         val list: List<Movie> = listOf(),

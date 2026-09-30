@@ -20,7 +20,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,13 +31,12 @@ import com.github.afrizalsebastian.compose_movieclone.models.Movie
 import com.github.afrizalsebastian.compose_movieclone.constants.buildPosterPath
 import com.github.afrizalsebastian.compose_movieclone.models.ApiStatus
 import com.github.afrizalsebastian.compose_movieclone.ui.theme.ComposeMovieCloneTheme
-import com.github.afrizalsebastian.compose_movieclone.viewmodels.HomeScreenViewModel
-import kotlinx.coroutines.launch
+import com.github.afrizalsebastian.compose_movieclone.viewmodels.HomeViewModel
 
 @Composable
 fun HorizontalMovieCard(
     title: String,
-    state: HomeScreenViewModel.ListMovieResponse,
+    state: HomeViewModel.ListMovieResponse,
     onReloadFailed:  () -> Unit,
     onClickPoster: (Movie?) -> Unit,
     modifier: Modifier = Modifier
@@ -103,7 +101,7 @@ fun HorizontalMovieCardPreview() {
     ComposeMovieCloneTheme() {
         HorizontalMovieCard(
             title = "Movies Trending",
-            state = HomeScreenViewModel.ListMovieResponse(),
+            state = HomeViewModel.ListMovieResponse(),
             onReloadFailed = {},
             onClickPoster = {}
         )

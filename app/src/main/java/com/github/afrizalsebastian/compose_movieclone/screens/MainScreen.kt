@@ -1,6 +1,7 @@
 package com.github.afrizalsebastian.compose_movieclone.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,16 +26,20 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.afrizalsebastian.compose_movieclone.models.Movie
 import com.github.afrizalsebastian.compose_movieclone.screens.main_screen.HomeScreen
 import com.github.afrizalsebastian.compose_movieclone.screens.main_screen.UpcomingScreen
 import com.github.afrizalsebastian.compose_movieclone.ui.theme.ComposeMovieCloneTheme
+import com.github.afrizalsebastian.compose_movieclone.viewmodels.MainViewModel
 
 @Composable
 fun MainScreen(
     toMovieDetail: (Movie?) -> Unit,
+    viewModel: MainViewModel = viewModel()
 ) {
-    var selectedTab by remember { mutableIntStateOf(0) }
+    val selectedTab by viewModel.selectedTab.collectAsStateWithLifecycle()
     val tabItems = listOf(
         "Home",
         "Upcoming",
@@ -53,16 +58,22 @@ fun MainScreen(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             NavigationBar(
+                containerColor = Color.Transparent,
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 16.dp)
+                    .border(
+                        width = 0.1.dp,
+                        color = Color.Gray,
+                        shape = RoundedCornerShape(12.dp)
+                    )
                     .clip(RoundedCornerShape(12.dp))
             ) {
                 tabItems.forEachIndexed { index, tab ->
                     NavigationBarItem(
                         selected = selectedTab == index,
                         onClick = {
-                            selectedTab = index
+                            viewModel.selectTab(index)
                         },
                         icon = {
                             Icon(
@@ -70,8 +81,6 @@ fun MainScreen(
                                 contentDescription = tab
                             )
                         },
-                        modifier = Modifier
-                            .background(Color.Transparent)
                     )
                 }
             }
