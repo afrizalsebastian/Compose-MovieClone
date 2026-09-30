@@ -14,6 +14,9 @@ if (localPropertiesFile.exists()) {
 
 val tmdbApiKey = localProperties.getProperty("TMDB_API_KEY") ?: throw GradleException("Missing TMDB_API_KEY config")
 val tmdbBaseUrl = localProperties.getProperty("TMDB_BASE_URL") ?: throw GradleException("Missing TMDB_BASE_URL config")
+val ytBaseUrl = localProperties.getProperty("YT_BASE_URL") ?: throw GradleException("Missing YT_BASE_URL config")
+val ytApiKey = localProperties.getProperty("YT_API_KEY") ?: throw GradleException("Missing YT_API_KEY config")
+val ytApiBaseUrl = localProperties.getProperty("YT_API_BASE_URL") ?: throw GradleException("Missing YT_API_BASE_URL config")
 
 android {
     namespace = "com.github.afrizalsebastian.compose_movieclone"
@@ -40,6 +43,24 @@ android {
             "String",
             "TMDB_BASE_URL",
             "\"$tmdbBaseUrl\""
+        )
+        
+        buildConfigField(
+            "String",
+            "YT_BASE_URL",
+            "\"$ytBaseUrl\""
+        )
+
+        buildConfigField(
+            "String",
+            "YT_API_KEY",
+            "\"$ytApiKey\""
+        )
+
+        buildConfigField(
+            "String",
+            "YT_API_BASE_URL",
+            "\"$ytApiBaseUrl\""
         )
     }
 
