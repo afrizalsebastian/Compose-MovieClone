@@ -16,4 +16,7 @@ interface TmdbApi {
 
     @GET("tv/top_rated")
     suspend fun getTopRatedTvShow(): MovieListApiResponse
+
+    @GET("movie/upcoming")
+    suspend fun getUpcomingMovies(): MovieListApiResponse
 }

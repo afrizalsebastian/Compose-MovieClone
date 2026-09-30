@@ -42,7 +42,6 @@ fun HomeScreen(
 
     LazyColumn(
         modifier = modifier
-            .padding(16.dp)
     ) {
         item {
             heroImage?.let {

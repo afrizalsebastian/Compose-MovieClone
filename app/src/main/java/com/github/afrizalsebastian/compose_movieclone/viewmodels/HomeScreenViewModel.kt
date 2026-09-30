@@ -33,33 +33,39 @@ class HomeScreenViewModel: ViewModel() {
 
 
     init {
-        fetchTrendingMovies()
-        fetchTrendingTvShow()
-        fetchTopRateMovie()
-        fetchTopRateTvShow()
+        if (_trendingMovies.value.list.isEmpty()) {
+            fetchTrendingMovies()
+        }
+        if (_trendingTvShow.value.list.isEmpty()) {
+            fetchTrendingTvShow()
+        }
+        if (_topRatedMovie.value.list.isEmpty()) {
+            fetchTopRateMovie()
+        }
+        if (_topRatedTvShow.value.list.isEmpty()) {
+            fetchTopRateTvShow()
+        }
     }
 
     fun fetchTrendingMovies() {
         viewModelScope.launch {
             try {
-                if (_trendingMovies.value.list.isEmpty() ){
-                    _trendingMovies.update {
-                        it.copy(
-                            status = ApiStatus.FETCHING
-                        )
-                    }
-                    val response = service.getPopularMovies()
-                    _trendingMovies.update {
-                        it.copy(
-                            list = response.results,
-                            status = ApiStatus.SUCCESS
-                        )
-                    }
-
-                    _heroImage.value = _trendingMovies.value.list.random()
+                _trendingMovies.update {
+                    it.copy(
+                        status = ApiStatus.FETCHING
+                    )
                 }
+                val response = service.getPopularMovies()
+                _trendingMovies.update {
+                    it.copy(
+                        list = response.results,
+                        status = ApiStatus.SUCCESS
+                    )
+                }
+
+                _heroImage.update { _trendingMovies.value.list.random() }
             }catch (e: Exception) {
-                Log.e("MovieClone", e.message ?: "Error when fetching data")
+                Log.e("FetchTrendingMovie", e.message ?: "Error when fetching data")
                 _trendingMovies.update {
                     it.copy(
                         status = ApiStatus.FAILED
@@ -72,22 +78,20 @@ class HomeScreenViewModel: ViewModel() {
     fun fetchTrendingTvShow() {
         viewModelScope.launch {
             try {
-                if (_trendingTvShow.value.list.isEmpty() ){
-                    _trendingTvShow.update {
-                        it.copy(
-                            status = ApiStatus.FETCHING
-                        )
-                    }
-                    val response = service.getPopularTvShow()
-                    _trendingTvShow.update {
-                        it.copy(
-                            list = response.results,
-                            status = ApiStatus.SUCCESS
-                        )
-                    }
+                _trendingTvShow.update {
+                    it.copy(
+                        status = ApiStatus.FETCHING
+                    )
+                }
+                val response = service.getPopularTvShow()
+                _trendingTvShow.update {
+                    it.copy(
+                        list = response.results,
+                        status = ApiStatus.SUCCESS
+                    )
                 }
             }catch (e: Exception) {
-                Log.e("MovieClone", e.message ?: "Error when fetching data")
+                Log.e("FetchTrendingTVShow", e.message ?: "Error when fetching data")
                 _trendingTvShow.update {
                     it.copy(
                         status = ApiStatus.FAILED
@@ -100,22 +104,20 @@ class HomeScreenViewModel: ViewModel() {
     fun fetchTopRateMovie() {
         viewModelScope.launch {
             try {
-                if (_topRatedMovie.value.list.isEmpty() ){
-                    _topRatedMovie.update {
-                        it.copy(
-                            status = ApiStatus.FETCHING
-                        )
-                    }
-                    val response = service.getTopRatedMovie()
-                    _topRatedMovie.update {
-                        it.copy(
-                            list = response.results,
-                            status = ApiStatus.SUCCESS
-                        )
-                    }
+                _topRatedMovie.update {
+                    it.copy(
+                        status = ApiStatus.FETCHING
+                    )
+                }
+                val response = service.getTopRatedMovie()
+                _topRatedMovie.update {
+                    it.copy(
+                        list = response.results,
+                        status = ApiStatus.SUCCESS
+                    )
                 }
             }catch (e: Exception) {
-                Log.e("MovieClone", e.message ?: "Error when fetching data")
+                Log.e("FetchTopRatedMovie", e.message ?: "Error when fetching data")
                 _topRatedMovie.update {
                     it.copy(
                         status = ApiStatus.FAILED
@@ -128,22 +130,20 @@ class HomeScreenViewModel: ViewModel() {
     fun fetchTopRateTvShow() {
         viewModelScope.launch {
             try {
-                if (_topRatedTvShow.value.list.isEmpty() ){
-                    _topRatedTvShow.update {
-                        it.copy(
-                            status = ApiStatus.FETCHING
-                        )
-                    }
-                    val response = service.getTopRatedTvShow()
-                    _topRatedTvShow.update {
-                        it.copy(
-                            list = response.results,
-                            status = ApiStatus.SUCCESS
-                        )
-                    }
+                _topRatedTvShow.update {
+                    it.copy(
+                        status = ApiStatus.FETCHING
+                    )
+                }
+                val response = service.getTopRatedTvShow()
+                _topRatedTvShow.update {
+                    it.copy(
+                        list = response.results,
+                        status = ApiStatus.SUCCESS
+                    )
                 }
             }catch (e: Exception) {
-                Log.e("MovieClone", e.message ?: "Error when fetching data")
+                Log.e("FetchTopRatedTVShow", e.message ?: "Error when fetching data")
                 _topRatedTvShow.update {
                     it.copy(
                         status = ApiStatus.FAILED

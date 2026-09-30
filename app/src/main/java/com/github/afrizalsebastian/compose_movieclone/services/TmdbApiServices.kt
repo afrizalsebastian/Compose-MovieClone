@@ -26,4 +26,6 @@ class TmdbApiServices(
     suspend fun getPopularTvShow() = api.getPopularTvShow()
     suspend fun getTopRatedMovie() = api.getTopRatedMovie()
     suspend fun getTopRatedTvShow() = api.getTopRatedTvShow()
+
+    suspend fun getUpcomingMovies() = api.getUpcomingMovies()
 }

@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.afrizalsebastian.compose_movieclone.models.Movie
 import com.github.afrizalsebastian.compose_movieclone.screens.main_screen.HomeScreen
+import com.github.afrizalsebastian.compose_movieclone.screens.main_screen.UpcomingScreen
 import com.github.afrizalsebastian.compose_movieclone.ui.theme.ComposeMovieCloneTheme
 
 @Composable
@@ -79,11 +80,12 @@ fun MainScreen(
         Box(
             modifier = Modifier
                 .padding(innerPadding)
+                .padding(16.dp)
                 .fillMaxSize()
         ) {
             when(selectedTab) {
                 0 -> HomeScreen(toMovieDetail = toMovieDetail)
-                1 -> Text("Upcoming Screen")
+                1 -> UpcomingScreen(toMovieDetail = toMovieDetail)
                 2 -> Text("Search Screen")
                 3 -> Text("Download Screen")
             }
