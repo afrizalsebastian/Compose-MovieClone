@@ -6,47 +6,50 @@ import androidx.lifecycle.viewModelScope
 import com.github.afrizalsebastian.compose_movieclone.models.ApiStatus
 import com.github.afrizalsebastian.compose_movieclone.models.Movie
 import com.github.afrizalsebastian.compose_movieclone.services.TmdbApiServices
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.text.isNotBlank
+import kotlin.time.Duration.Companion.milliseconds
 
 class SearchViewModel : ViewModel() {
     private val service = TmdbApiServices()
+    private val _searchQuery = MutableStateFlow("")
     private val _status = MutableStateFlow(ApiStatus.NOT_STARTED)
     private val _list = MutableStateFlow(emptyList<Movie>())
     private val _isMovieSearch = MutableStateFlow(true)
 
+    val searchQuery = _searchQuery.asStateFlow()
     val status = _status.asStateFlow()
     val list = _list.asStateFlow()
     val isMovieSearch = _isMovieSearch.asStateFlow()
 
     init {
-        if (_isMovieSearch.value) {
-            fetchTrendingMovies()
-        }else {
-            fetchTrendingTvShow()
+        observeSearch()
+    }
+
+    @OptIn(FlowPreview::class)
+    private fun observeSearch() {
+        viewModelScope.launch {
+            _searchQuery
+                .debounce(500.milliseconds)
+                .collectLatest {
+                    doFetchMovies()
+                }
         }
     }
 
-    fun changeSearchFor(searchQuery: String) {
+    fun changeSearchFor() {
         _isMovieSearch.update { _isMovieSearch.value.not() }
+        _searchQuery.update { "" }
+    }
 
-        // Empty search query back to trending
-        if (searchQuery.isBlank()) {
-            if (_isMovieSearch.value) {
-                fetchTrendingMovies()
-            }else {
-                fetchTrendingTvShow()
-            }
-            return
-        }
-
-        if (_isMovieSearch.value) {
-            fetchSearchMovie(searchQuery)
-        }else {
-            fetchSearchTvShow(searchQuery)
-        }
+    fun onChangeSearchQuery(query: String) {
+        _searchQuery.update { query }
     }
 
     fun fetchTrendingMovies() {
@@ -105,4 +108,25 @@ class SearchViewModel : ViewModel() {
         }
     }
 
+    fun doFetchMovies() {
+        if (_searchQuery.value.isNotBlank()) {
+            if (_isMovieSearch.value) {
+                fetchSearchMovie(_searchQuery.value)
+            }else {
+                fetchSearchTvShow(_searchQuery.value)
+            }
+
+            return
+        }
+
+        trendingPart()
+    }
+
+    fun trendingPart() {
+        if (_isMovieSearch.value) {
+            fetchTrendingMovies()
+        }else {
+            fetchTrendingTvShow()
+        }
+    }
 }

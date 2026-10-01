@@ -96,7 +96,7 @@ fun MainScreen(
             when(selectedTab) {
                 0 -> HomeScreen(toMovieDetail = toMovieDetail)
                 1 -> UpcomingScreen(toMovieDetail = toMovieDetail)
-                2 -> SearchMovieScreen()
+                2 -> SearchMovieScreen(toMovieDetail = toMovieDetail)
                 3 -> Text("Download Screen")
             }
         }

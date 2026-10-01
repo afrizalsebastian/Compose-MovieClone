@@ -2,6 +2,7 @@ package com.github.afrizalsebastian.compose_movieclone.screens.main_screen
 
 import android.media.ImageWriter
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,6 +44,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.afrizalsebastian.compose_movieclone.components.ImageCardWithLoading
 import com.github.afrizalsebastian.compose_movieclone.constants.buildPosterPath
 import com.github.afrizalsebastian.compose_movieclone.models.ApiStatus
+import com.github.afrizalsebastian.compose_movieclone.models.Movie
 import com.github.afrizalsebastian.compose_movieclone.ui.theme.ComposeMovieCloneTheme
 import com.github.afrizalsebastian.compose_movieclone.viewmodels.SearchViewModel
 import kotlinx.coroutines.delay
@@ -50,35 +52,14 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun SearchMovieScreen(
+    toMovieDetail: (Movie?) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = viewModel()
 ) {
     val status by viewModel.status.collectAsStateWithLifecycle()
     val list by viewModel.list.collectAsStateWithLifecycle()
     val isMovieSearch by viewModel.isMovieSearch.collectAsStateWithLifecycle()
-
-    var searchQuery by remember { mutableStateOf("") }
-
-    fun doFetchMovies() {
-        if (searchQuery.isNotBlank()) {
-            if (isMovieSearch) {
-                viewModel.fetchSearchMovie(searchQuery)
-            }else {
-                viewModel.fetchSearchTvShow(searchQuery)
-            }
-        }else {
-            if (isMovieSearch) {
-                viewModel.fetchTrendingMovies()
-            }else {
-                viewModel.fetchTrendingTvShow()
-            }
-        }
-    }
-
-    LaunchedEffect(searchQuery) {
-        delay(500.milliseconds)
-        doFetchMovies()
-    }
+    val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
@@ -91,7 +72,7 @@ fun SearchMovieScreen(
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = {
-                    searchQuery = it
+                    viewModel.onChangeSearchQuery(it)
                 },
                 singleLine = true,
                 label = { Text(if (isMovieSearch) "Search Movie" else "Search TV Show", fontWeight = FontWeight.SemiBold) },
@@ -102,7 +83,7 @@ fun SearchMovieScreen(
 
             IconButton(
                 onClick = {
-                    viewModel.changeSearchFor(searchQuery)
+                    viewModel.changeSearchFor()
                 },
                 modifier = Modifier.border(
                     width = 0.1.dp,
@@ -135,7 +116,7 @@ fun SearchMovieScreen(
                 Column() {
                     Text("Failed to fetch data")
                     IconButton(onClick = {
-                        doFetchMovies()
+                        viewModel.doFetchMovies()
                     }, modifier = Modifier.border(
                         width = 0.1.dp,
                         color = Color.Gray,
@@ -168,6 +149,9 @@ fun SearchMovieScreen(
                                     .fillMaxWidth()
                                     .aspectRatio(2f/3f)
                                     .clip(RoundedCornerShape(16.dp))
+                                    .clickable{
+                                        toMovieDetail(it)
+                                    }
                             )
                         }
                     }
@@ -180,6 +164,8 @@ fun SearchMovieScreen(
 @Composable
 fun SearchMoviePreview() {
     ComposeMovieCloneTheme() {
-        SearchMovieScreen()
+        SearchMovieScreen(
+            toMovieDetail = {}
+        )
     }
 }

@@ -71,12 +71,17 @@ fun UpcomingScreen(
 
             ApiStatus.SUCCESS ->
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(list) {
                         VerticalListMovie(it,
                             toMovieDetail = toMovieDetail,
-                            modifier = Modifier.padding(vertical = 8.dp)
+                            modifier = Modifier
+                                .border(
+                                    width = 0.1.dp,
+                                    color = Color.Gray,
+                                    shape = RoundedCornerShape(8.dp)
+                                )
                         )
                     }
                 }

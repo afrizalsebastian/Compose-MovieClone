@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -32,14 +33,15 @@ fun VerticalListMovie(
         modifier = modifier
             .clickable{
                 toMovieDetail(movie)
-            },
+            }
+            .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
     ) {
         ImageCardWithLoading(
             path = buildPosterPath(movie.posterPath),
             contentDescription = movie.title ?: movie.name ?: "",
-            modifier = Modifier.height(150.dp)
+            modifier = Modifier.height(125.dp)
                 .aspectRatio(2f/3f)
                 .clip(RoundedCornerShape(8.dp))
         )
