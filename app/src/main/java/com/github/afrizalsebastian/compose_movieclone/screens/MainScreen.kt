@@ -30,6 +30,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.afrizalsebastian.compose_movieclone.models.Movie
 import com.github.afrizalsebastian.compose_movieclone.screens.main_screen.HomeScreen
+import com.github.afrizalsebastian.compose_movieclone.screens.main_screen.SearchMovieScreen
 import com.github.afrizalsebastian.compose_movieclone.screens.main_screen.UpcomingScreen
 import com.github.afrizalsebastian.compose_movieclone.ui.theme.ComposeMovieCloneTheme
 import com.github.afrizalsebastian.compose_movieclone.viewmodels.MainViewModel
@@ -95,7 +96,7 @@ fun MainScreen(
             when(selectedTab) {
                 0 -> HomeScreen(toMovieDetail = toMovieDetail)
                 1 -> UpcomingScreen(toMovieDetail = toMovieDetail)
-                2 -> Text("Search Screen")
+                2 -> SearchMovieScreen()
                 3 -> Text("Download Screen")
             }
         }

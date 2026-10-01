@@ -36,6 +36,7 @@ io-coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coi
 io-coil-network = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil"}
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose"}
 androidx-compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "composeIcons"}
+androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "composeIcons"}
 
 
 [plugins]
